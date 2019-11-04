@@ -1,0 +1,12 @@
+<?jelly escape-by-default='true'?>
+<!--
+Use it like <st:adjunct includes="io.jenkins.plugins.font-awesome"/>
+-->
+<j:jelly xmlns:j="jelly:core">
+
+  <link rel="stylesheet" href="${resURL}/plugin/font-awesome-api/webjars/css/solid.min.css"/>
+  <link rel="stylesheet" href="${resURL}/plugin/font-awesome-api/webjars/css/fontawesome.min.css"/>
+
+  <script type="text/javascript" src="${resURL}/plugin/echarts-api/webjars/echarts-en.common.min.js" />
+
+</j:jelly>

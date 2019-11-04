@@ -9,3 +9,23 @@
 Provides [Font Awesome](https://fontawesome.com) for Jenkins Plugins.
 
 This plugin contains the latest [WebJars](https://www.webjars.org) release and corresponding Jenkins UI elements. 
+
+## How to use the plugin
+
+In order to use this JS library, add a maven dependency to your pom:
+```xml
+    <dependency>
+      <groupId>io.jenkins.plugins</groupId>
+      <artifactId>font-awesome-api</artifactId>
+      <version>[latest version]</version>
+    </dependency>
+```
+
+Then you can use Font Awesome in your jelly files using the following snippet:
+```xml
+      <st:adjunct includes="io.jenkins.plugins.font-awesome"/>
+```
+ 
+You can find several examples of Jenkins views that use Font Awesome in the 
+[Warnings Next Generation plugin](https://github.com/jenkinsci/warnings-ng-plugin).
+
