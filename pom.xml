@@ -13,7 +13,7 @@
   <groupId>io.jenkins.plugins</groupId>
   <packaging>hpi</packaging>
   <name>Font Awesome API Plugin</name>
-  <version>5.10.1-1-SNAPSHOT</version>
+  <version>5.10.1-1-beta1-SNAPSHOT</version>
   <description>Jenkins plug-in that provides the free fonts of Font Awesome.</description>
 
   <properties>
