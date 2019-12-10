@@ -17,7 +17,7 @@
   <url>https://github.com/jenkinsci/font-awesome-api-plugin</url>
 
   <properties>
-    <revision>5.11.2-1-beta1</revision>
+    <revision>5.11.2-2-beta1</revision>
     <changelist>-SNAPSHOT</changelist>
     <font-awesome.version>5.11.2</font-awesome.version>
 
