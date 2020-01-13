@@ -2,8 +2,6 @@ package io.jenkins.plugins.fontawesome.api;
 
 import java.util.Arrays;
 
-import edu.hm.hafner.util.VisibleForTesting;
-
 import j2html.tags.ContainerTag;
 
 import io.jenkins.plugins.util.JenkinsFacade;
@@ -41,8 +39,15 @@ public class SvgTag {
         this(iconName, new JenkinsFacade());
     }
 
-    @VisibleForTesting
-    SvgTag(final String iconName, final JenkinsFacade jenkinsFacade) {
+    /**
+     * Creates a new {@link SvgTag} that renders the specified SVG icon of FontAwesome.
+     *
+     * @param iconName
+     *         the name of the icon (without fa- prefix), e.g. {@code chevron-circle-up}.
+     * @param jenkinsFacade
+     *         Jenkins facade to replaced with a stub during unit tests
+     */
+    public SvgTag(final String iconName, final JenkinsFacade jenkinsFacade) {
         container = new ContainerTag("svg")
                 .withClasses(SVG_ICON)
                 .with(use().withHref(jenkinsFacade.getImagePath(ICON_PREFIX + iconName)));
