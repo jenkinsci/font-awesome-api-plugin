@@ -1,0 +1,19 @@
+<?jelly escape-by-default='true'?>
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler">
+  <st:documentation>
+    Renders a FontAwesome SVG icon.
+
+    <st:attribute name="name" use="required" type="String">
+      The name of the Font Awesome SVG icon, e.g. 'chevron-circle-up'.
+    </st:attribute>
+    <st:attribute name="class" use="optional" type="String">
+      Additional classes to be applied to the svg tag.
+    </st:attribute>
+
+  </st:documentation>
+
+  <svg class="svg-icon ${class}">
+    <use href="${resURL}/plugin/font-awesome-api/webjars/sprites/solid.svg#${name}"/>
+  </svg>
+
+</j:jelly>

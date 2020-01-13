@@ -17,7 +17,7 @@
   <url>https://github.com/jenkinsci/font-awesome-api-plugin</url>
 
   <properties>
-    <revision>5.11.2-3-beta2</revision>
+    <revision>5.11.2-3-beta1</revision>
     <changelist>-SNAPSHOT</changelist>
     <font-awesome.version>5.11.2</font-awesome.version>
 
@@ -26,10 +26,20 @@
     <java.level>8</java.level>
     <jenkins-test-harness.version>2.49</jenkins-test-harness.version>
     <spotbugs.failOnError>false</spotbugs.failOnError>
+
     <slf4j.version>1.7.29</slf4j.version>
     <codingstyle.version>0.2.7</codingstyle.version>
+    <plugin-util-api.version>0.1.0-beta4</plugin-util-api.version>
+    <j2html.version>1.4.0</j2html.version>
 
     <module.name>${project.groupId}.font-awesome-api</module.name>
+
+    <!-- Test Library Dependencies Versions -->
+    <junit.version>5.5.2</junit.version>
+    <junit-platform-launcher.version>1.5.2</junit-platform-launcher.version>
+    <mockito.version>3.2.0</mockito.version>
+    <assertj.version>3.14.0</assertj.version>
+    <archunit.version>0.12.0</archunit.version>
 
     <!-- Maven plug-in versions -->
     <animal-sniffer-maven-plugin.version>1.18</animal-sniffer-maven-plugin.version>
@@ -54,12 +64,84 @@
     </developer>
   </developers>
 
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-api</artifactId>
+        <version>${slf4j.version}</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
   <dependencies>
     <dependency>
       <groupId>org.webjars</groupId>
       <artifactId>font-awesome</artifactId>
       <version>${font-awesome.version}</version>
       <scope>provided</scope>
+    </dependency>
+
+    <!-- Library dependencies -->
+    <dependency>
+      <groupId>io.jenkins.plugins</groupId>
+      <artifactId>plugin-util-api</artifactId>
+      <version>${plugin-util-api.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.j2html</groupId>
+      <artifactId>j2html</artifactId>
+      <version>${j2html.version}</version>
+    </dependency>
+
+    <!-- Test library dependencies -->
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-api</artifactId>
+      <version>${junit.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-engine</artifactId>
+      <version>${junit.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.platform</groupId>
+      <artifactId>junit-platform-launcher</artifactId>
+      <version>${junit-platform-launcher.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-params</artifactId>
+      <version>${junit.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-core</artifactId>
+      <version>${mockito.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.assertj</groupId>
+      <artifactId>assertj-core</artifactId>
+      <version>${assertj.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.tngtech.archunit</groupId>
+      <artifactId>archunit-junit5-api</artifactId>
+      <version>${archunit.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.tngtech.archunit</groupId>
+      <artifactId>archunit-junit5-engine</artifactId>
+      <version>${archunit.version}</version>
+      <scope>test</scope>
     </dependency>
   </dependencies>
 
@@ -94,10 +176,10 @@
               <goal>copy-resources</goal>
             </goals>
             <configuration>
-              <outputDirectory>${project.build.directory}/${project.artifactId}/webjars</outputDirectory>
+              <outputDirectory>${project.build.directory}/${project.artifactId}/webjars/sprites</outputDirectory>
               <resources>
                 <resource>
-                  <directory>${project.build.directory}/webjars/META-INF/resources/webjars/font-awesome/${font-awesome.version}</directory>
+                  <directory>${project.build.directory}/webjars/META-INF/resources/webjars/font-awesome/${font-awesome.version}/sprites</directory>
                   <filtering>false</filtering>
                 </resource>
               </resources>
@@ -151,6 +233,21 @@
       </plugins>
     </pluginManagement>
   </build>
+
+  <profiles>
+    <profile>
+      <id>skip</id>
+      <properties>
+        <maven.javadoc.skip>true</maven.javadoc.skip>
+        <pmd.skip>true</pmd.skip>
+        <spotbugs.skip>true</spotbugs.skip>
+        <checkstyle.skip>true</checkstyle.skip>
+        <skipTests>true</skipTests>
+        <skipITs>true</skipITs>
+        <revapi.skip>true</revapi.skip>
+      </properties>
+    </profile>
+  </profiles>
 
   <scm>
     <connection>scm:git:git://github.com/jenkinsci/${project.artifactId}-plugin.git</connection>

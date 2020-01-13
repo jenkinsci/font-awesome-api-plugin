@@ -22,9 +22,15 @@ In order to use this JS library, add a maven dependency to your pom:
 </dependency>
 ```
 
-Then you can use Font Awesome in your jelly files using the following snippet:
+Then you can use Font Awesome SVG icons in your jelly files using the following snippet:
 ```xml
-<st:adjunct includes="io.jenkins.plugins.font-awesome"/>
+<j:jelly xmlns:fa="/font-awesome" >
+  
+  [...]
+  <fa:svg-icon name="check-double" class="no-issues-banner"/>
+  [...]
+
+</j:jelly>
 ```
  
 You can find several examples of Jenkins views that use Font Awesome in the 
