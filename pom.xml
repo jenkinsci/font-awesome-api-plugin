@@ -17,9 +17,9 @@
   <url>https://github.com/jenkinsci/font-awesome-api-plugin</url>
 
   <properties>
-    <revision>5.11.2-4-beta1</revision>
+    <revision>5.12.0-1-beta1</revision>
     <changelist>-SNAPSHOT</changelist>
-    <font-awesome.version>5.11.2</font-awesome.version>
+    <font-awesome.version>5.12.0</font-awesome.version>
 
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <jenkins.version>2.138.4</jenkins.version>
