@@ -27,7 +27,7 @@
     <jenkins-test-harness.version>2.49</jenkins-test-harness.version>
     <spotbugs.failOnError>false</spotbugs.failOnError>
 
-    <slf4j.version>1.7.29</slf4j.version>
+    <slf4j.version>1.7.30</slf4j.version>
     <codingstyle.version>0.3.2</codingstyle.version>
     <plugin-util-api.version>0.1.0-beta4</plugin-util-api.version>
     <j2html.version>1.4.0</j2html.version>
