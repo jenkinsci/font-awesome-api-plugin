@@ -2,10 +2,10 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>org.jenkins-ci.plugins</groupId>
-    <artifactId>plugin</artifactId>
-    <version>3.55</version>
-    <relativePath />
+    <groupId>org.jvnet.hudson.plugins</groupId>
+    <artifactId>analysis-pom</artifactId>
+    <version>2.1.0</version>
+    <relativePath/>
   </parent>
 
   <artifactId>font-awesome-api</artifactId>
@@ -13,6 +13,7 @@
   <packaging>hpi</packaging>
   <name>Font Awesome API Plugin</name>
   <version>${revision}${changelist}</version>
+
   <description>Jenkins plug-in that provides the free fonts of Font Awesome.</description>
   <url>https://github.com/jenkinsci/font-awesome-api-plugin</url>
 
@@ -21,32 +22,11 @@
     <changelist>-SNAPSHOT</changelist>
     <font-awesome.version>5.12.0</font-awesome.version>
 
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <jenkins.version>2.138.4</jenkins.version>
-    <java.level>8</java.level>
-    <jenkins-test-harness.version>2.59</jenkins-test-harness.version>
-    <spotbugs.failOnError>false</spotbugs.failOnError>
+    <module.name>${project.groupId}.font-awesome-api</module.name>
 
-    <slf4j.version>1.7.30</slf4j.version>
-    <codingstyle.version>0.3.2</codingstyle.version>
     <plugin-util-api.version>0.1.0-beta5</plugin-util-api.version>
     <j2html.version>1.4.0</j2html.version>
 
-    <module.name>${project.groupId}.font-awesome-api</module.name>
-
-    <!-- Test Library Dependencies Versions -->
-    <junit.version>5.5.2</junit.version>
-    <junit-platform-launcher.version>1.5.2</junit-platform-launcher.version>
-    <mockito.version>3.2.4</mockito.version>
-    <assertj.version>3.14.0</assertj.version>
-    <archunit.version>0.13.0</archunit.version>
-
-    <!-- Maven plug-in versions -->
-    <animal-sniffer-maven-plugin.version>1.18</animal-sniffer-maven-plugin.version>
-    <maven-hpi-plugin.version>2.5</maven-hpi-plugin.version>
-    <maven-jar-plugin.version>3.2.0</maven-jar-plugin.version>
-    <maven-dependency-plugin.version>3.1.1</maven-dependency-plugin.version>
-    <maven-resources-plugin.version>3.1.0</maven-resources-plugin.version>
   </properties>
 
   <licenses>
@@ -64,16 +44,6 @@
     </developer>
   </developers>
 
-  <dependencyManagement>
-    <dependencies>
-      <dependency>
-        <groupId>org.slf4j</groupId>
-        <artifactId>slf4j-api</artifactId>
-        <version>${slf4j.version}</version>
-      </dependency>
-    </dependencies>
-  </dependencyManagement>
-
   <dependencies>
     <dependency>
       <groupId>org.webjars</groupId>
@@ -82,7 +52,6 @@
       <scope>provided</scope>
     </dependency>
 
-    <!-- Library dependencies -->
     <dependency>
       <groupId>io.jenkins.plugins</groupId>
       <artifactId>plugin-util-api</artifactId>
@@ -94,55 +63,6 @@
       <version>${j2html.version}</version>
     </dependency>
 
-    <!-- Test library dependencies -->
-    <dependency>
-      <groupId>org.junit.jupiter</groupId>
-      <artifactId>junit-jupiter-api</artifactId>
-      <version>${junit.version}</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.junit.jupiter</groupId>
-      <artifactId>junit-jupiter-engine</artifactId>
-      <version>${junit.version}</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.junit.platform</groupId>
-      <artifactId>junit-platform-launcher</artifactId>
-      <version>${junit-platform-launcher.version}</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.junit.jupiter</groupId>
-      <artifactId>junit-jupiter-params</artifactId>
-      <version>${junit.version}</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.mockito</groupId>
-      <artifactId>mockito-core</artifactId>
-      <version>${mockito.version}</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.assertj</groupId>
-      <artifactId>assertj-core</artifactId>
-      <version>${assertj.version}</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>com.tngtech.archunit</groupId>
-      <artifactId>archunit-junit5-api</artifactId>
-      <version>${archunit.version}</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>com.tngtech.archunit</groupId>
-      <artifactId>archunit-junit5-engine</artifactId>
-      <version>${archunit.version}</version>
-      <scope>test</scope>
-    </dependency>
   </dependencies>
 
   <build>
@@ -150,7 +70,6 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-dependency-plugin</artifactId>
-        <version>${maven-dependency-plugin.version}</version>
         <executions>
           <execution>
             <id>unpack-dependencies</id>
@@ -166,8 +85,8 @@
         </executions>
       </plugin>
       <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-resources-plugin</artifactId>
-        <version>${maven-resources-plugin.version}</version>
         <executions>
           <execution>
             <id>copy-resources</id>
@@ -187,67 +106,8 @@
           </execution>
         </executions>
       </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-jar-plugin</artifactId>
-        <version>${maven-jar-plugin.version}</version>
-        <configuration>
-          <archive>
-            <manifestEntries>
-              <Built-By>Ullrich Hafner</Built-By>
-              <Url>${project.scm.url}</Url>
-              <Jenkins-ClassFilter-Whitelisted>true</Jenkins-ClassFilter-Whitelisted>
-              <Automatic-Module-Name>${module.name}</Automatic-Module-Name>
-            </manifestEntries>
-          </archive>
-        </configuration>
-      </plugin>
     </plugins>
-    <pluginManagement>
-      <plugins>
-        <plugin>
-          <groupId>org.codehaus.mojo</groupId>
-          <artifactId>animal-sniffer-maven-plugin</artifactId>
-          <version>${animal-sniffer-maven-plugin.version}</version>
-        </plugin>
-        <plugin>
-          <artifactId>maven-enforcer-plugin</artifactId>
-          <executions>
-            <execution>
-              <id>display-info</id>
-              <configuration>
-                <rules>
-                  <enforceBytecodeVersion>
-                    <ignoreClasses>
-                      <!-- asm dependency from PMD contains a java9 module-info.class -->
-                      <ignoreClass>module-info</ignoreClass>
-                      <!-- Junit >= 5.3 contains some java9 classes -->
-                      <ignoreClass>**/ModuleUtils*</ignoreClass>
-                    </ignoreClasses>
-                  </enforceBytecodeVersion>
-                </rules>
-              </configuration>
-            </execution>
-          </executions>
-        </plugin>
-      </plugins>
-    </pluginManagement>
   </build>
-
-  <profiles>
-    <profile>
-      <id>skip</id>
-      <properties>
-        <maven.javadoc.skip>true</maven.javadoc.skip>
-        <pmd.skip>true</pmd.skip>
-        <spotbugs.skip>true</spotbugs.skip>
-        <checkstyle.skip>true</checkstyle.skip>
-        <skipTests>true</skipTests>
-        <skipITs>true</skipITs>
-        <revapi.skip>true</revapi.skip>
-      </properties>
-    </profile>
-  </profiles>
 
   <scm>
     <connection>scm:git:git://github.com/jenkinsci/${project.artifactId}-plugin.git</connection>
