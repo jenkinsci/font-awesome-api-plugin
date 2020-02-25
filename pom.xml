@@ -12,13 +12,13 @@
   <groupId>io.jenkins.plugins</groupId>
   <packaging>hpi</packaging>
   <name>Font Awesome API Plugin</name>
-  <version>5.12.0-5-beta1</version>
+  <version>${revision}${changelist}</version>
 
   <description>Jenkins plug-in that provides the free fonts of Font Awesome.</description>
   <url>https://github.com/jenkinsci/font-awesome-api-plugin</url>
 
   <properties>
-    <revision>5.12.0-5-beta1</revision>
+    <revision>5.12.0-6-beta1</revision>
     <changelist>-SNAPSHOT</changelist>
     <font-awesome.version>5.12.0</font-awesome.version>
 
@@ -113,7 +113,7 @@
     <connection>scm:git:git://github.com/jenkinsci/${project.artifactId}-plugin.git</connection>
     <developerConnection>scm:git:git@github.com:jenkinsci/${project.artifactId}-plugin.git</developerConnection>
     <url>https://github.com/jenkinsci/${project.artifactId}-plugin</url>
-    <tag>font-awesome-api-5.12.0-5-beta1</tag>
+    <tag>${scmTag}</tag>
   </scm>
 
   <repositories>
