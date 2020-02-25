@@ -12,7 +12,7 @@ import io.jenkins.plugins.util.JenkinsFacade;
  * @author Ullrich Hafner
  */
 public class SvgTag {
-    private static final String SVG_ICON = "svg-icon";
+    private static final String SVG_ICON = "fa-svg-icon";
     private static final String ICON_PREFIX = "/plugin/font-awesome-api/webjars/sprites/solid.svg#";
 
     private ContainerTag container;

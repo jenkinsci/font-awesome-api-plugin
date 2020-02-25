@@ -19,6 +19,6 @@ class SvgTagCreatorTest {
         when(jenkins.getImagePath(anyString())).thenReturn("path");
 
         assertThat(new SvgTag("hello", jenkins).render())
-                .isEqualTo("<svg class=\"svg-icon\"><use href=\"path\"></use></svg>");
+                .isEqualTo("<svg class=\"fa-svg-icon\"><use href=\"path\"></use></svg>");
     }
 }

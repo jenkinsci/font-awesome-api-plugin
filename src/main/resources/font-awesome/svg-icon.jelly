@@ -12,7 +12,7 @@
 
   </st:documentation>
 
-  <svg class="svg-icon ${class}">
+  <svg class="fa-svg-icon ${class}">
     <use href="${resURL}/plugin/font-awesome-api/webjars/sprites/solid.svg#${name}"/>
   </svg>
 
