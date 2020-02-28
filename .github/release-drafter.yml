@@ -1,5 +1,5 @@
-tag-template: forensics-api-$NEXT_PATCH_VERSION
-name-template: Forensics API $NEXT_PATCH_VERSION 🎁
+tag-template: font-awesome-api-$NEXT_PATCH_VERSION
+name-template: Font Awesome API $NEXT_PATCH_VERSION 🎁
 
 template: |
   $CHANGES

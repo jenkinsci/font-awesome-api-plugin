@@ -18,7 +18,7 @@
   <url>https://github.com/jenkinsci/font-awesome-api-plugin</url>
 
   <properties>
-    <revision>5.12.0-6-beta1</revision>
+    <revision>5.12.0-7</revision>
     <changelist>-SNAPSHOT</changelist>
     <font-awesome.version>5.12.0</font-awesome.version>
 
@@ -110,9 +110,9 @@
   </build>
 
   <scm>
-    <connection>scm:git:git://github.com/jenkinsci/${project.artifactId}-plugin.git</connection>
-    <developerConnection>scm:git:git@github.com:jenkinsci/${project.artifactId}-plugin.git</developerConnection>
-    <url>https://github.com/jenkinsci/${project.artifactId}-plugin</url>
+    <connection>scm:git:git://github.com/jenkinsci/font-awesome-api-plugin.git</connection>
+    <developerConnection>scm:git:git@github.com:jenkinsci/font-awesome-api-plugin.git</developerConnection>
+    <url>https://github.com/jenkinsci/font-awesome-api-plugin</url>
     <tag>${scmTag}</tag>
   </scm>
 
