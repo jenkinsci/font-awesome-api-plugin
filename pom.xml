@@ -14,7 +14,7 @@
   <name>Font Awesome API Plugin</name>
   <version>${revision}${changelist}</version>
 
-  <description>Jenkins plug-in that provides the free fonts of Font Awesome.</description>
+  <description>Provides the free fonts of Font Awesome for Jenkins plugins.</description>
   <url>https://github.com/jenkinsci/font-awesome-api-plugin</url>
 
   <properties>
