@@ -54,7 +54,7 @@ Then use the new tag `svg-icon` in your jelly view:
 If you are generating views using Java code, then you also can use the class `SvgTag` to generate the
 HTML markup for such an icon.
 
-image:https://ci.jenkins.io/job/Plugins/job/font-awesome-api-plugin/job/master/badge/icon[Jenkins, link=https://ci.jenkins.io/job/Plugins/job/font-awesome-api-plugin/job/master/]
-image:https://github.com/jenkinsci/font-awesome-api-plugin/workflows/CI%20on%20all%20platforms/badge.svg?branch=master[GitHub Actions, link=https://github.com/jenkinsci/font-awesome-api-plugin/actions]
+image:https://ci.jenkins.io/job/Plugins/job/font-awesome-api-plugin/job/master/badge/icon?subject=Jenkins%20CI[Jenkins, link=https://ci.jenkins.io/job/Plugins/job/font-awesome-api-plugin/job/master/]
+image:https://github.com/jenkinsci/font-awesome-api-plugin/workflows/GitHub%20CI/badge.svg?branch=master[GitHub Actions, link=https://github.com/jenkinsci/font-awesome-api-plugin/actions]
 image:https://img.shields.io/github/issues-pr/jenkinsci/font-awesome-api-plugin.svg[GitHub pull requests, link=https://github.com/jenkinsci/font-awesome-api-plugin/pulls]
 
