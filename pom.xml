@@ -18,9 +18,9 @@
   <url>https://github.com/jenkinsci/font-awesome-api-plugin</url>
 
   <properties>
-    <revision>5.13.0-2</revision>
+    <revision>5.14.0-1</revision>
     <changelist>-SNAPSHOT</changelist>
-    <font-awesome.version>5.13.0</font-awesome.version>
+    <font-awesome.version>5.14.0</font-awesome.version>
 
     <module.name>${project.groupId}.font-awesome-api</module.name>
 
