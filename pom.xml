@@ -20,7 +20,7 @@
   <properties>
     <revision>5.14.0-2</revision>
     <changelist>-SNAPSHOT</changelist>
-    <font-awesome.version>5.14.0</font-awesome.version>
+    <font-awesome.version>5.15.0</font-awesome.version>
 
     <module.name>${project.groupId}.font-awesome-api</module.name>
 
