@@ -27,6 +27,12 @@ updates:
       - dependency-name: org.jenkins-ci.plugins:token-macro
         versions:
           - "> 2.13"
+      - dependency-name: org.webjars:popper.js
+        versions:
+          - ">= 2.0.0"
+      - dependency-name: org.webjars:bootstrap
+        versions:
+          - ">= 5.0.0"
 
   - package-ecosystem: "github-actions"
     directory: "/"
