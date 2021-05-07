@@ -13,7 +13,7 @@
   </st:documentation>
 
   <svg class="fa-svg-icon ${class}">
-    <use href="${resURL}/plugin/font-awesome-api/webjars/sprites/solid.svg#${name}"/>
+    <use href="${resURL}/plugin/font-awesome-api/sprites/solid.svg#${name}"/>
   </svg>
 
 </j:jelly>

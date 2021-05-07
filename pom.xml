@@ -97,10 +97,10 @@
               <goal>copy-resources</goal>
             </goals>
             <configuration>
-              <outputDirectory>${project.build.directory}/${project.artifactId}/js</outputDirectory>
+              <outputDirectory>${project.build.directory}/${project.artifactId}/sprites</outputDirectory>
               <resources>
                 <resource>
-                  <directory>${project.basedir}/node_modules/@fontawesome-free/sprites</directory>
+                  <directory>${project.basedir}/node_modules/@fortawesome/fontawesome-free/sprites</directory>
                   <filtering>false</filtering>
                 </resource>
               </resources>

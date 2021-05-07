@@ -13,9 +13,9 @@ import io.jenkins.plugins.util.JenkinsFacade;
  */
 public class SvgTag {
     private static final String SVG_ICON = "fa-svg-icon";
-    private static final String ICON_PREFIX = "/plugin/font-awesome-api/webjars/sprites/solid.svg#";
+    private static final String ICON_PREFIX = "/plugin/font-awesome-api/sprites/solid.svg#";
 
-    private ContainerTag container;
+    private final ContainerTag container;
 
     /**
      * Creates a new {@link SvgTag} that renders the specified SVG icon of FontAwesome.
