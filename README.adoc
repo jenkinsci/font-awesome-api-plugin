@@ -11,7 +11,8 @@ Provides https://fontawesome.com[Font Awesome] for Jenkins Plugins. Font Awesome
 according to their self-perception it is the web's most popular icon set and toolkit. Currently, it contains more than
 1,500 free icons.
 
-This plugin contains the latest https://www.webjars.org[WebJars] release and corresponding Jenkins UI elements.
+This plugin contains the SVG sprites of the latest https://fontawesome.com[Font Awesome] 5.x release and corresponding
+Jenkins UI elements (model).
 
 == How to use the plugin
 
