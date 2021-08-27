@@ -9,11 +9,20 @@
     <st:attribute name="class" use="optional" type="String">
       Additional classes to be applied to the svg tag.
     </st:attribute>
+    <st:attribute name="prefix" use="optional" type="String">
+      FontAwesome Icon style prefix to be used. Allowed style prefix values are "solid", "regular", or "brands".
+      If no style prefix is defined then the default prefix style "solid" will be used.
+    </st:attribute>
+    <st:attribute name="tooltip" use="optional" type="String">
+      Optional tooltip for the icon.
+    </st:attribute>
 
   </st:documentation>
 
   <svg class="fa-svg-icon ${class}">
-    <use href="${resURL}/plugin/font-awesome-api/sprites/solid.svg#${name}"/>
+    <title>${tooltip}</title>
+
+    <use href="${resURL}/plugin/font-awesome-api/sprites/${prefix != null ? prefix : 'solid'}.svg#${name}"/>
   </svg>
 
 </j:jelly>
