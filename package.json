@@ -6,7 +6,7 @@
     "doc": "doc"
   },
   "dependencies": {
-    "@fortawesome/fontawesome-free": "^5.15.3",
+    "@fortawesome/fontawesome-free": "^5.15.4",
     "remark-cli": "^10.0.0",
     "remark-lint": "^8.0.0",
     "remark-preset-lint-recommended": "^6.0.1"
