@@ -1,10 +1,16 @@
 <?jelly escape-by-default='true'?>
-<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler">
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:fa="/font-awesome">
   <st:documentation>
-    Renders a FontAwesome SVG icon.
+    Renders a FontAwesome SVG icon as a link using a button styling.
 
+    <st:attribute name="url" use="required" type="String">
+      URL to use as href attribute.
+    </st:attribute>
     <st:attribute name="name" use="required" type="String">
       The name of the Font Awesome SVG icon, e.g. 'chevron-circle-up'.
+    </st:attribute>
+    <st:attribute name="label" use="required" type="String">
+      The label that is used as text (of the invisible property aria-label).
     </st:attribute>
     <st:attribute name="class" use="optional" type="String">
       Additional classes to be applied to the svg tag.
@@ -19,25 +25,9 @@
 
   </st:documentation>
 
-  <st:once>
-    <link rel="stylesheet" href="${resURL}/plugin/font-awesome-api/css/jenkins-style.css"/>
-  </st:once>
 
-  <j:choose>
-    <j:when test="${size(tooltip) > 0}">
-      <span class="fa-tooltip">
-        <span class="jenkins-tooltip">${tooltip}</span>
-        <svg class="fa-svg-icon ${class}">
-          <use href="${resURL}/plugin/font-awesome-api/sprites/${prefix != null ? prefix : 'solid'}.svg#${name}"/>
-        </svg>
-      </span>
-    </j:when>
-    <j:otherwise>
-      <svg class="fa-svg-icon ${class}">
-        <use href="${resURL}/plugin/font-awesome-api/sprites/${prefix != null ? prefix : 'solid'}.svg#${name}"/>
-      </svg>
-    </j:otherwise>
-  </j:choose>
-
+  <a href="${url}" class="fa-image-button" aria-label="${label}" >
+    <fa:svg-icon name="${name}" prefix="${prefix}" tooltip="${tooltip}" class="fa-image-button-svg ${class}"/>
+  </a>
 
 </j:jelly>
