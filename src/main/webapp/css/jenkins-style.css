@@ -14,6 +14,16 @@
     top: 105%;
     left: 105%;
     width: 15em;
+
+    /* TODO: Fix for old Jenkins versions: once we are on an LTS release > 2.303 these values can be removed */
+    padding: 5px 10px;
+    border-radius: 6px;
+    background: var(--background);
+    box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.05), 0 2px 2px rgba(0, 0, 0, 0.05), 0 10px 20px rgba(0, 0, 0, 0.2);
+    color: var(--text-color);
+    font-size: 0.8rem;
+    z-index: 40;
+    overflow: hidden;
 }
 
 .fa-tooltip:hover .jenkins-tooltip {
