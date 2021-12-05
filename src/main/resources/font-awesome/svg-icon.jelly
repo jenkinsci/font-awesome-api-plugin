@@ -24,7 +24,7 @@
   </st:once>
 
   <j:choose>
-    <j:when test="${size(tooltip) > 0}">
+    <j:when test="${tooltip != null and size(tooltip) > 0}">
       <span class="fa-tooltip">
         <span class="jenkins-tooltip">${tooltip}</span>
         <svg class="fa-svg-icon ${class}">
