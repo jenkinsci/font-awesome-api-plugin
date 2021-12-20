@@ -24,8 +24,6 @@
     <module.name>${project.groupId}.font-awesome-api</module.name>
 
     <plugin-util-api.version>2.8.0</plugin-util-api.version>
-    <j2html.version>1.4.0</j2html.version>
-
   </properties>
 
   <licenses>
