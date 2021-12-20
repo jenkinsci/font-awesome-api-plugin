@@ -49,12 +49,6 @@
       <artifactId>plugin-util-api</artifactId>
       <version>${plugin-util-api.version}</version>
     </dependency>
-    <dependency>
-      <groupId>com.j2html</groupId>
-      <artifactId>j2html</artifactId>
-      <version>${j2html.version}</version>
-    </dependency>
-
   </dependencies>
 
   <build>
