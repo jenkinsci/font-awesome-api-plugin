@@ -24,6 +24,7 @@
     <module.name>${project.groupId}.font-awesome-api</module.name>
 
     <plugin-util-api.version>2.13.0</plugin-util-api.version>
+    <jenkins.baseline>2.319</jenkins.baseline>
   </properties>
 
   <licenses>
