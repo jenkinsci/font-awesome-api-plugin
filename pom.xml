@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.jvnet.hudson.plugins</groupId>
     <artifactId>analysis-pom</artifactId>
-    <version>5.19.0</version>
+    <version>5.20.0</version>
     <relativePath />
   </parent>
 
@@ -18,7 +18,7 @@
   <url>https://github.com/jenkinsci/font-awesome-api-plugin</url>
 
   <properties>
-    <revision>6.0.0-2</revision>
+    <revision>6.1.1-1</revision>
     <changelist>-SNAPSHOT</changelist>
 
     <module.name>${project.groupId}.font-awesome-api</module.name>
