@@ -1,0 +1,7 @@
+<?jelly escape-by-default='true'?>
+
+<div>
+  Provides <a href=" https://fontawesome.com/">Font Awesome 6</a> for Jenkins Plugins.
+  Font Awesome has vector icons and social logos. It is the web's most popular icon set and
+  toolkit with more than 1700 free icons.
+</div>
