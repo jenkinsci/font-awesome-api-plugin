@@ -21,6 +21,9 @@
     <revision>6.1.2-2</revision>
     <changelist>-SNAPSHOT</changelist>
 
+    <jenkins.baseline>2.346</jenkins.baseline>
+    <jenkins.version>2.346.3</jenkins.version>
+
     <module.name>${project.groupId}.font-awesome-api</module.name>
   </properties>
 
@@ -94,6 +97,41 @@
                 </resource>
               </resources>
             </configuration>
+          </execution>
+          <execution>
+            <id>copy-icons</id>
+            <phase>process-resources</phase>
+            <goals>
+              <goal>copy-resources</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${project.build.directory}/classes/images/symbols</outputDirectory>
+              <resources>
+                <resource>
+                  <directory>${project.basedir}/node_modules/@fortawesome/fontawesome-free/svgs</directory>
+                  <filtering>false</filtering>
+                </resource>
+              </resources>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <version>3.1.0</version>
+        <executions>
+          <execution>
+            <phase>process-resources</phase>
+            <configuration>
+              <target>
+                <replace token="path d=" value="path fill=&quot;currentColor&quot; stroke=&quot;currentColor&quot; d=" dir="${project.build.directory}/classes/images/symbols">
+                  <include name="**/*.svg" />
+                </replace>
+              </target>
+            </configuration>
+            <goals>
+              <goal>run</goal>
+            </goals>
           </execution>
         </executions>
       </plugin>
