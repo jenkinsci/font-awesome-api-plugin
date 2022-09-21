@@ -124,7 +124,7 @@
             <phase>process-resources</phase>
             <configuration>
               <target>
-                <replace token="path d=" value="path fill=&quot;currentColor&quot; stroke=&quot;currentColor&quot; d=" dir="${project.build.directory}/classes/images/symbols">
+                <replace token="path d=" value="path fill=&quot;currentColor&quot; d=" dir="${project.build.directory}/classes/images/symbols">
                   <include name="**/*.svg" />
                 </replace>
               </target>
