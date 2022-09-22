@@ -2,6 +2,8 @@ package io.jenkins.plugins.fontawesome.api;
 
 import java.util.Arrays;
 
+import org.apache.commons.lang3.StringUtils;
+
 import j2html.tags.ContainerTag;
 
 import io.jenkins.plugins.util.JenkinsFacade;
@@ -12,13 +14,22 @@ import io.jenkins.plugins.util.JenkinsFacade;
  * @author Ullrich Hafner
  */
 public class SvgTag {
+    /** Available Font Awesome styles. */
+    public enum FontAwesomeStyle {
+        SOLID,
+        REGULAR,
+        BRANDS
+    }
+
     private static final String SVG_ICON = "fa-svg-icon";
-    private static final String ICON_PREFIX = "/plugin/font-awesome-api/sprites/solid.svg#";
+    private static final String ICON_PREFIX = "/plugin/font-awesome-api/sprites/";
+    private static final String ICON_SUFFIX = ".svg#";
 
     private final ContainerTag container;
 
     /**
-     * Creates a new {@link SvgTag} that renders the specified SVG icon of FontAwesome.
+     * Creates a new {@link SvgTag} that renders the specified SVG icon of FontAwesome using
+     * {@link FontAwesomeStyle#SOLID}.
      *
      * @param iconName
      *         the name of the icon (without fa- prefix), e.g. {@code chevron-circle-up}.
@@ -34,9 +45,36 @@ public class SvgTag {
      *
      * @param iconName
      *         the name of the icon (without fa- prefix), e.g. {@code chevron-circle-up}.
+     * @param style
+     *         Font Awesome style of the icon
+     *
+     * @return the HTML tag
+     */
+    public static SvgTag fontAwesomeSvgIcon(final String iconName, final FontAwesomeStyle style) {
+        return new SvgTag(iconName, style);
+    }
+
+    /**
+     * Creates a new {@link SvgTag} that renders the specified SVG icon of FontAwesome using
+     * {@link FontAwesomeStyle#SOLID}.
+     *
+     * @param iconName
+     *         the name of the icon (without fa- prefix), e.g. {@code chevron-circle-up}.
      */
     public SvgTag(final String iconName) {
         this(iconName, new JenkinsFacade());
+    }
+
+    /**
+     * Creates a new {@link SvgTag} that renders the specified SVG icon of FontAwesome.
+     *
+     * @param iconName
+     *         the name of the icon (without fa- prefix), e.g. {@code chevron-circle-up}.
+     * @param style
+     *         Font Awesome style of the icon
+     */
+    public SvgTag(final String iconName, final FontAwesomeStyle style) {
+        this(iconName, new JenkinsFacade(), style);
     }
 
     /**
@@ -48,9 +86,23 @@ public class SvgTag {
      *         Jenkins facade to replaced with a stub during unit tests
      */
     public SvgTag(final String iconName, final JenkinsFacade jenkinsFacade) {
+        this(iconName, jenkinsFacade, FontAwesomeStyle.SOLID);
+    }
+
+    /**
+     * Creates a new {@link SvgTag} that renders the specified SVG icon of FontAwesome.
+     *
+     * @param iconName
+     *         the name of the icon (without fa- prefix), e.g. {@code chevron-circle-up}.
+     * @param jenkinsFacade
+     *         Jenkins facade to replaced with a stub during unit tests
+     * @param style
+     *         Font Awesome style of the icon
+     */
+    public SvgTag(final String iconName, final JenkinsFacade jenkinsFacade, final FontAwesomeStyle style) {
         container = new ContainerTag("svg")
                 .withClasses(SVG_ICON)
-                .with(use().withHref(jenkinsFacade.getImagePath(ICON_PREFIX + iconName)));
+                .with(use().withHref(jenkinsFacade.getImagePath(ICON_PREFIX + StringUtils.lowerCase(style.name()) + ICON_SUFFIX + iconName)));
     }
 
     /**
