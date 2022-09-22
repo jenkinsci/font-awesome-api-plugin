@@ -28,6 +28,6 @@ class SvgTagCreatorTest {
                 .isEqualTo("<svg class=\"fa-svg-icon\"><use href=\"path-regular\"></use></svg>");
 
         assertThat(tag.withClasses("icon-md").render())
-                .isEqualTo("<svg class=\"icon-md fa-svg-icon\"><use href=\"path-regular\"></use></svg>");
+                .isEqualTo("<svg class=\"icon-md svg-icon\"><use href=\"path-regular\"></use></svg>");
     }
 }
