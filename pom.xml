@@ -21,9 +21,6 @@
     <revision>6.2.0-4</revision>
     <changelist>-SNAPSHOT</changelist>
 
-    <jenkins.baseline>2.346</jenkins.baseline>
-    <jenkins.version>2.346.3</jenkins.version>
-
     <module.name>${project.groupId}.font-awesome-api</module.name>
   </properties>
 
