@@ -2,24 +2,6 @@
     --fa-image-color: #b4b4b4;
 }
 
-.fa-tooltip {
-    position: relative;
-    display: inline-block;
-    font-weight: normal;
-}
-
-.fa-tooltip .jenkins-tooltip {
-    visibility: hidden;
-    position: absolute;
-    top: 105%;
-    left: 105%;
-    width: 15em;
-}
-
-.fa-tooltip:hover .jenkins-tooltip {
-    visibility: visible;
-}
-
 /* ------------------------------------------------------------------------------------------------------------------- */
 /* A small image button                                                                                                */
 /* ------------------------------------------------------------------------------------------------------------------- */

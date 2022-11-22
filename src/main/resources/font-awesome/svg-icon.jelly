@@ -25,12 +25,9 @@
 
   <j:choose>
     <j:when test="${tooltip != null and size(tooltip) > 0}">
-      <span class="fa-tooltip">
-        <span class="jenkins-tooltip">${tooltip}</span>
-        <svg class="fa-svg-icon ${class}">
-          <use href="${resURL}/plugin/font-awesome-api/sprites/${prefix != null ? prefix : 'solid'}.svg#${name}"/>
-        </svg>
-      </span>
+      <svg tooltip="${tooltip}" class="fa-svg-icon ${class}">
+        <use href="${resURL}/plugin/font-awesome-api/sprites/${prefix != null ? prefix : 'solid'}.svg#${name}"/>
+      </svg>
     </j:when>
     <j:otherwise>
       <svg class="fa-svg-icon ${class}">
