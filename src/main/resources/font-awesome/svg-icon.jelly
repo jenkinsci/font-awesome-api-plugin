@@ -1,5 +1,5 @@
 <?jelly escape-by-default='true'?>
-<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler">
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:l="/lib/layout">
   <st:documentation>
     Renders a FontAwesome SVG icon.
 
@@ -23,18 +23,6 @@
     <link rel="stylesheet" href="${resURL}/plugin/font-awesome-api/css/jenkins-style.css"/>
   </st:once>
 
-  <j:choose>
-    <j:when test="${tooltip != null and size(tooltip) > 0}">
-      <svg tooltip="${tooltip}" class="fa-svg-icon ${class}">
-        <use href="${resURL}/plugin/font-awesome-api/sprites/${prefix != null ? prefix : 'solid'}.svg#${name}"/>
-      </svg>
-    </j:when>
-    <j:otherwise>
-      <svg class="fa-svg-icon ${class}">
-        <use href="${resURL}/plugin/font-awesome-api/sprites/${prefix != null ? prefix : 'solid'}.svg#${name}"/>
-      </svg>
-    </j:otherwise>
-  </j:choose>
-
+  <l:icon src="symbol-${prefix != null ? prefix : 'solid'}/${name} plugin-font-awesome-api" class="fa-svg-icon ${class}" tooltip="${tooltip}" />
 
 </j:jelly>

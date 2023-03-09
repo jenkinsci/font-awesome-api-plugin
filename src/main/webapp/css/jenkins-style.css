@@ -1,17 +1,14 @@
-:root {
-    --fa-image-color: #b4b4b4;
-}
-
 /* ------------------------------------------------------------------------------------------------------------------- */
 /* A small image button                                                                                                */
 /* ------------------------------------------------------------------------------------------------------------------- */
 
 .fa-image-button-svg {
-    fill: var(--fa-image-color);
+    fill: var(--text-color);
     height: 16px;
     width: 16px;
     vertical-align: text-bottom;
     margin-left: 0.2em;
+    color: var(--text-color);
 }
 
 .fa-image-button {
@@ -20,7 +17,7 @@
 }
 
 .fa-image-button-warning {
-    fill: var(--unstable-build-icon-color)!important;
+    color: var(--unstable-build-icon-color)!important;
 }
 
 .fa-image-button:hover {
