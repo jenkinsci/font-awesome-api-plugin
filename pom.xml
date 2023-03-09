@@ -84,22 +84,6 @@
         <artifactId>maven-resources-plugin</artifactId>
         <executions>
           <execution>
-            <id>copy-resources</id>
-            <phase>process-resources</phase>
-            <goals>
-              <goal>copy-resources</goal>
-            </goals>
-            <configuration>
-              <outputDirectory>${project.build.directory}/${project.artifactId}/sprites</outputDirectory>
-              <resources>
-                <resource>
-                  <directory>${project.basedir}/node_modules/@fortawesome/fontawesome-free/sprites</directory>
-                  <filtering>false</filtering>
-                </resource>
-              </resources>
-            </configuration>
-          </execution>
-          <execution>
             <id>copy-icons</id>
             <phase>process-resources</phase>
             <goals>

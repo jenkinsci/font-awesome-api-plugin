@@ -1,10 +1,12 @@
 package io.jenkins.plugins.fontawesome.api;
 
 import java.util.Arrays;
+import java.util.Locale;
 
-import org.apache.commons.lang3.StringUtils;
+import org.jenkins.ui.symbol.Symbol;
+import org.jenkins.ui.symbol.SymbolRequest.Builder;
 
-import j2html.tags.ContainerTag;
+import j2html.tags.UnescapedText;
 
 import io.jenkins.plugins.util.JenkinsFacade;
 
@@ -14,6 +16,8 @@ import io.jenkins.plugins.util.JenkinsFacade;
  * @author Ullrich Hafner
  */
 public class SvgTag {
+    private final Builder builder;
+
     /** Available Font Awesome styles. */
     public enum FontAwesomeStyle {
         SOLID,
@@ -21,11 +25,8 @@ public class SvgTag {
         BRANDS
     }
 
-    private static final String SVG_ICON = "fa-svg-icon";
-    private static final String ICON_PREFIX = "/plugin/font-awesome-api/sprites/";
-    private static final String ICON_SUFFIX = ".svg#";
-
-    private final ContainerTag container;
+    private static final String ICON_MD = "icon-md";
+    private static final String FONT_AWESOME_API = "font-awesome-api";
 
     /**
      * Creates a new {@link SvgTag} that renders the specified SVG icon of FontAwesome using
@@ -62,7 +63,7 @@ public class SvgTag {
      *         the name of the icon (without fa- prefix), e.g. {@code chevron-circle-up}.
      */
     public SvgTag(final String iconName) {
-        this(iconName, new JenkinsFacade());
+        this(iconName, FontAwesomeStyle.SOLID);
     }
 
     /**
@@ -74,7 +75,10 @@ public class SvgTag {
      *         Font Awesome style of the icon
      */
     public SvgTag(final String iconName, final FontAwesomeStyle style) {
-        this(iconName, new JenkinsFacade(), style);
+        builder = new Builder()
+                .withName(style.name().toLowerCase(Locale.ENGLISH) + "/" + iconName)
+                .withPluginName(FONT_AWESOME_API)
+                .withClasses(ICON_MD);
     }
 
     /**
@@ -84,9 +88,11 @@ public class SvgTag {
      *         the name of the icon (without fa- prefix), e.g. {@code chevron-circle-up}.
      * @param jenkinsFacade
      *         Jenkins facade to replaced with a stub during unit tests
+     * @deprecated use {@link #SvgTag(String)} instead
      */
-    public SvgTag(final String iconName, final JenkinsFacade jenkinsFacade) {
-        this(iconName, jenkinsFacade, FontAwesomeStyle.SOLID);
+    @Deprecated
+    public SvgTag(final String iconName, @SuppressWarnings("unused") final JenkinsFacade jenkinsFacade) {
+        this(iconName);
     }
 
     /**
@@ -98,11 +104,11 @@ public class SvgTag {
      *         Jenkins facade to replaced with a stub during unit tests
      * @param style
      *         Font Awesome style of the icon
+     * @deprecated use {@link #SvgTag(String, FontAwesomeStyle)} instead
      */
-    public SvgTag(final String iconName, final JenkinsFacade jenkinsFacade, final FontAwesomeStyle style) {
-        container = new ContainerTag("svg")
-                .withClasses(SVG_ICON)
-                .with(use().withHref(jenkinsFacade.getImagePath(ICON_PREFIX + StringUtils.lowerCase(style.name()) + ICON_SUFFIX + iconName)));
+    @Deprecated
+    public SvgTag(final String iconName, @SuppressWarnings("unused") final JenkinsFacade jenkinsFacade, final FontAwesomeStyle style) {
+        this(iconName, style);
     }
 
     /**
@@ -114,15 +120,9 @@ public class SvgTag {
      * @return this tag
      */
     public SvgTag withClasses(final String... classNames) {
-        String[] actualClasses = Arrays.copyOf(classNames, classNames.length + 1);
-        actualClasses[classNames.length] = "svg-icon";
-        container.withClasses(actualClasses);
+        builder.withClasses(String.join(" ", Arrays.asList(classNames)));
 
         return this;
-    }
-
-    private static ContainerTag use() {
-        return new ContainerTag("use");
     }
 
     /**
@@ -131,6 +131,8 @@ public class SvgTag {
      * @return the tag as HTML String
      */
     public String render() {
-        return container.render();
+        String symbol = Symbol.get(builder.build());
+
+        return new UnescapedText(symbol).render();
     }
 }
