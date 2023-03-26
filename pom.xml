@@ -23,8 +23,6 @@
 
     <module.name>${project.groupId}.font-awesome-api</module.name>
 
-    <plugin-util-api.version>3.1.0</plugin-util-api.version>
-
   </properties>
 
   <licenses>
@@ -46,7 +44,6 @@
     <dependency>
       <groupId>io.jenkins.plugins</groupId>
       <artifactId>plugin-util-api</artifactId>
-      <version>${plugin-util-api.version}</version>
     </dependency>
   </dependencies>
 
