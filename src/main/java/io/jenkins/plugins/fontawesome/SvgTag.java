@@ -1,23 +1,22 @@
-package io.jenkins.plugins.fontawesome.api;
+package io.jenkins.plugins.fontawesome;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Locale;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.jenkins.ui.symbol.Symbol;
 import org.jenkins.ui.symbol.SymbolRequest.Builder;
 
 import j2html.tags.UnescapedText;
 
-import io.jenkins.plugins.util.JenkinsFacade;
-
 /**
  * Textual SVG tag representation that shows a FontAwesome icon.
  *
  * @author Ullrich Hafner
- * @deprecated use {@link Symbol} instead
  */
-@Deprecated
 public class SvgTag {
+    private static final String SPACE = " ";
     private final Builder builder;
 
     /** Available Font Awesome styles. */
@@ -84,37 +83,7 @@ public class SvgTag {
     }
 
     /**
-     * Creates a new {@link SvgTag} that renders the specified SVG icon of FontAwesome.
-     *
-     * @param iconName
-     *         the name of the icon (without fa- prefix), e.g. {@code chevron-circle-up}.
-     * @param jenkinsFacade
-     *         Jenkins facade to replaced with a stub during unit tests
-     * @deprecated use {@link #SvgTag(String)} instead
-     */
-    @Deprecated
-    public SvgTag(final String iconName, @SuppressWarnings("unused") final JenkinsFacade jenkinsFacade) {
-        this(iconName);
-    }
-
-    /**
-     * Creates a new {@link SvgTag} that renders the specified SVG icon of FontAwesome.
-     *
-     * @param iconName
-     *         the name of the icon (without fa- prefix), e.g. {@code chevron-circle-up}.
-     * @param jenkinsFacade
-     *         Jenkins facade to replaced with a stub during unit tests
-     * @param style
-     *         Font Awesome style of the icon
-     * @deprecated use {@link #SvgTag(String, FontAwesomeStyle)} instead
-     */
-    @Deprecated
-    public SvgTag(final String iconName, @SuppressWarnings("unused") final JenkinsFacade jenkinsFacade, final FontAwesomeStyle style) {
-        this(iconName, style);
-    }
-
-    /**
-     * Uses the specified class names for this SVG tag. Adds the tag {@code svg-icon} as well as class.
+     * Uses the specified class names for this SVG tag. Adds the tag {@link #ICON_MD} as well as class.
      *
      * @param classNames
      *         the additional class names, might be empty
@@ -122,9 +91,13 @@ public class SvgTag {
      * @return this tag
      */
     public SvgTag withClasses(final String... classNames) {
-        builder.withClasses(String.join(" ", Arrays.asList(classNames)));
+        builder.withClasses(join(Arrays.asList(classNames)) + SPACE + ICON_MD);
 
         return this;
+    }
+
+    private String join(final List<String> classes) {
+        return String.join(SPACE, classes);
     }
 
     /**
@@ -136,5 +109,10 @@ public class SvgTag {
         String symbol = Symbol.get(builder.build());
 
         return new UnescapedText(symbol).render();
+    }
+
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(builder);
     }
 }
