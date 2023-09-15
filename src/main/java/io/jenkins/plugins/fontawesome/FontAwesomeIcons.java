@@ -100,13 +100,12 @@ public final class FontAwesomeIcons {
     }
 
     @SuppressFBWarnings("NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE")
-    private static Map<String, String> collectIcons(final Path path, @CheckForNull final FontAwesomeStyle filter)
-            throws IOException {
+    private static Map<String, String> collectIcons(
+            @CheckForNull final Path path, @CheckForNull final FontAwesomeStyle filter) throws IOException {
         Map<String, String> icons = new LinkedHashMap<>();
 
         if (path != null) {
-            try (Stream<Path> stream = filter == null ? Files.walk(path, 2) : Files.walk(
-                    path.resolve(filter.name().toLowerCase(Locale.ENGLISH)), 1)) {
+            try (Stream<Path> stream = findIcons(path, filter)) {
                 stream.filter(icon -> icon != null && icon.getFileName() != null && StringUtils.endsWith(
                                 icon.getFileName().toString(), SVG_FILE_ENDING))
                         .sorted().forEach(icon -> {
@@ -122,6 +121,14 @@ public final class FontAwesomeIcons {
         }
 
         return icons;
+    }
+
+    private static Stream<Path> findIcons(final Path path, @CheckForNull final FontAwesomeStyle filter) throws IOException {
+        if (filter == null) {
+            return Files.walk(path, 2);
+        }
+
+        return Files.walk(path.resolve(filter.name().toLowerCase(Locale.ENGLISH)), 1);
     }
 
     private FontAwesomeIcons() {
