@@ -3,7 +3,6 @@ name: 'Invoke Release Drafter'
 on:
   push:
     branches:
-      - master
       - main
 
 jobs:
