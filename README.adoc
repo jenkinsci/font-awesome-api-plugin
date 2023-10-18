@@ -4,7 +4,7 @@
 = Font Awesome Jenkins Plugin
 
 image:https://ci.jenkins.io/job/Plugins/job/font-awesome-api-plugin/job/main/badge/icon?subject=Jenkins%20CI[Jenkins, link=https://ci.jenkins.io/job/Plugins/job/font-awesome-api-plugin/job/main/]
-image:https://github.com/jenkinsci/font-awesome-api-plugin/workflows/GitHub%20CI/badge.svg?branch=main[GitHub Actions, link=https://github.com/jenkinsci/font-awesome-api-plugin/actions]
+image:https://github.com/jenkinsci/font-awesome-api-plugin/workflows/GitHub%20CI/badge.svg[GitHub Actions, link=https://github.com/jenkinsci/font-awesome-api-plugin/actions]
 image:https://img.shields.io/github/issues-pr/jenkinsci/font-awesome-api-plugin.svg[GitHub pull requests, link=https://github.com/jenkinsci/font-awesome-api-plugin/pulls]
 
 Provides https://fontawesome.com[Font Awesome] for Jenkins Plugins. Font Awesome has vector icons and social logos,
