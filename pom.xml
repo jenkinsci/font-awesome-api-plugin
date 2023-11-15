@@ -22,7 +22,7 @@
     <changelist>-SNAPSHOT</changelist>
 
     <module.name>${project.groupId}.font-awesome-api</module.name>
-    <testcontainers.version>1.19.1</testcontainers.version>
+    <testcontainers.version>1.19.2</testcontainers.version>
 
   </properties>
 
