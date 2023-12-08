@@ -3,10 +3,12 @@ name: 'Invoke Release Drafter'
 on:
   push:
     branches:
+      - master
       - main
 
 jobs:
-  update_release_draft:
+  update-release-draft:
+    name: 'Update Release Draft'
     runs-on: ubuntu-latest
     steps:
       - uses: release-drafter/release-drafter@v5.25.0
