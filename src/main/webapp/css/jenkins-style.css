@@ -25,3 +25,7 @@
     border-radius: 5px;
     transition: 0.2s ease;
 }
+
+svg.fa-svg-icon {
+    color: var(--text-color);
+}

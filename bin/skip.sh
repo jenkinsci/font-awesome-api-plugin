@@ -8,8 +8,8 @@ mvn -o clean install -Pskip || { echo "Build failed"; exit 1; }
 
 echo "Installing plugin in $JENKINS_HOME"
 
-rm -rf $JENKINS_HOME/plugins/echarts-api-plugin*
-cp -fv target/echarts-api.hpi $JENKINS_HOME/plugins/echarts-api.jpi
+rm -rf $JENKINS_HOME/plugins/font-awesome-api-plugin*
+cp -fv target/font-awesome-api.hpi $JENKINS_HOME/plugins/font-awesome-api.jpi
 
 CURRENT_UID="$(id -u):$(id -g)"
 export CURRENT_UID
