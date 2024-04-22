@@ -1,6 +1,6 @@
 {
   "name": "font-awesome-api",
-  "version": "6.5.1",
+  "version": "6.5.2",
   "description": "Font Awesome Jenkins Plugin",
   "directories": {
     "doc": "doc"
