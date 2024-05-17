@@ -14,14 +14,15 @@ import java.util.Enumeration;
 import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.apache.commons.lang3.StringUtils;
 
 import edu.umd.cs.findbugs.annotations.CheckForNull;
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 import io.jenkins.plugins.fontawesome.SvgTag.FontAwesomeStyle;
 
@@ -86,9 +87,7 @@ public final class FontAwesomeIcons {
                             return collectIcons(fileSystem.getPath(IMAGES_SYMBOLS_PATH), filter);
                         }
                     }
-                    else {
-                        return collectIcons(Paths.get(uri), filter);
-                    }
+                    return collectIcons(Paths.get(uri), filter);
                 }
             }
         }
@@ -99,31 +98,35 @@ public final class FontAwesomeIcons {
         return new LinkedHashMap<>();
     }
 
-    @SuppressFBWarnings("NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE")
     private static Map<String, String> collectIcons(
             @CheckForNull final Path path, @CheckForNull final FontAwesomeStyle filter) throws IOException {
-        Map<String, String> icons = new LinkedHashMap<>();
-
-        if (path != null) {
-            try (Stream<Path> stream = findIcons(path, filter)) {
-                stream.filter(icon -> icon != null && icon.getFileName() != null && StringUtils.endsWith(
-                                icon.getFileName().toString(), SVG_FILE_ENDING))
-                        .sorted().forEach(icon -> {
-                                    if (icon.getParent() != null && icon.getParent().getFileName() != null
-                                            && icon.getFileName() != null) {
-                                        String iconName = icon.getParent().getFileName() + "/" + StringUtils.removeEnd(
-                                                icon.getFileName().toString(), SVG_FILE_ENDING);
-                                        icons.put(iconName, getIconClassName(iconName));
-                                    }
-                                }
-                        );
-            }
+        if (path == null) {
+            throw new IllegalArgumentException("Path to icons is not defined!");
         }
 
-        return icons;
+        try (Stream<Path> stream = findIcons(path, filter)) {
+            return stream.filter(Objects::nonNull)
+                    .filter(icon -> icon.getFileName() != null)
+                    .filter(FontAwesomeIcons::isSvgImage)
+                    .filter(icon -> icon.getParent() != null)
+                    .filter(icon -> icon.getParent().getFileName() != null)
+                    .sorted()
+                    .map(FontAwesomeIcons::createFileName)
+                    .collect(Collectors.toMap(icon -> icon, FontAwesomeIcons::getIconClassName));
+        }
     }
 
-    private static Stream<Path> findIcons(final Path path, @CheckForNull final FontAwesomeStyle filter) throws IOException {
+    private static String createFileName(final Path icon) {
+        return icon.getParent().getFileName() + "/"
+                + StringUtils.removeEnd(icon.getFileName().toString(), SVG_FILE_ENDING);
+    }
+
+    private static boolean isSvgImage(final Path path) {
+        return StringUtils.endsWith(path.getFileName().toString(), SVG_FILE_ENDING);
+    }
+
+    private static Stream<Path> findIcons(final Path path, @CheckForNull final FontAwesomeStyle filter)
+            throws IOException {
         if (filter == null) {
             return Files.walk(path, 2);
         }
