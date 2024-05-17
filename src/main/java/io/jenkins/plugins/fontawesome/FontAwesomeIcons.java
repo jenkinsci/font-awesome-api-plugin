@@ -81,7 +81,7 @@ public final class FontAwesomeIcons {
                     .collect(Collectors.toMap(icon -> icon, FontAwesomeIcons::getIconClassName));
         }
         catch (IOException exception) {
-            throw new IllegalStateException("Unable to find icons: Resource unavailable.");
+            throw new IllegalStateException("Unable to find icons: Resource unavailable.", exception);
         }
     }
 
