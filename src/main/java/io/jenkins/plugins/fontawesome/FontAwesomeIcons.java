@@ -11,12 +11,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Collections;
 import java.util.Enumeration;
-import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -32,7 +29,6 @@ import io.jenkins.plugins.fontawesome.SvgTag.FontAwesomeStyle;
  * @author strangelookingnerd
  */
 public final class FontAwesomeIcons {
-    private static final Logger LOGGER = Logger.getLogger(FontAwesomeIcons.class.getName());
     private static final String SVG_FILE_ENDING = ".svg";
     private static final String IMAGES_SYMBOLS_PATH = "images/symbols/";
     private static final String FONT_AWESOME_API_PLUGIN = "font-awesome-api";
@@ -56,7 +52,7 @@ public final class FontAwesomeIcons {
      * @return a sorted map of available icons with icon name as key and the icon class name as value.
      */
     public static Map<String, String> getAvailableIcons() {
-        return getAvailableIcons(null);
+        return getIconsFromClasspath(null);
     }
 
     /**
@@ -72,7 +68,31 @@ public final class FontAwesomeIcons {
         return getIconsFromClasspath(filter);
     }
 
-    private static Map<String, String> getIconsFromClasspath(@CheckForNull final FontAwesomeStyle filter) {
+    private static Map<String, String> getIconsFromClasspath(@CheckForNull final FontAwesomeStyle styleFilter) {
+        try {
+            return createIconStream(getIconFolder(), styleFilter)
+                    .filter(Objects::nonNull)
+                    .filter(icon -> icon.getFileName() != null)
+                    .filter(FontAwesomeIcons::isSvgImage)
+                    .filter(icon -> icon.getParent() != null)
+                    .filter(icon -> icon.getParent().getFileName() != null)
+                    .sorted()
+                    .map(FontAwesomeIcons::createFileName)
+                    .collect(Collectors.toMap(icon -> icon, FontAwesomeIcons::getIconClassName));
+        }
+        catch (IOException exception) {
+            throw new IllegalStateException("Unable to find icons: Resource unavailable.");
+        }
+    }
+
+    private static Stream<Path> createIconStream(final Path iconFolder, @CheckForNull final FontAwesomeStyle filter) throws IOException {
+        if (filter == null) {
+            return Files.walk(iconFolder, 2);
+        }
+        return Files.walk(iconFolder.resolve(filter.name().toLowerCase(Locale.ENGLISH)), 1);
+    }
+
+    private static Path getIconFolder() {
         try {
             Enumeration<URL> urls = FontAwesomeIcons.class.getClassLoader().getResources(IMAGES_SYMBOLS_PATH);
 
@@ -84,36 +104,17 @@ public final class FontAwesomeIcons {
 
                     if (StringUtils.equals(uri.getScheme(), "jar")) {
                         try (FileSystem fileSystem = FileSystems.newFileSystem(uri, Collections.emptyMap())) {
-                            return collectIcons(fileSystem.getPath(IMAGES_SYMBOLS_PATH), filter);
+                            return fileSystem.getPath(IMAGES_SYMBOLS_PATH);
                         }
                     }
-                    return collectIcons(Paths.get(uri), filter);
+                    return Paths.get(uri);
                 }
             }
         }
-        catch (IOException | URISyntaxException ex) {
-            LOGGER.log(Level.WARNING, "Unable to read available icons: Resource unavailable.", ex);
+        catch (IOException | URISyntaxException exception) {
+            throw new IllegalStateException("Unable to read available icons: Resource unavailable.", exception);
         }
-
-        return new LinkedHashMap<>();
-    }
-
-    private static Map<String, String> collectIcons(
-            @CheckForNull final Path path, @CheckForNull final FontAwesomeStyle filter) throws IOException {
-        if (path == null) {
-            throw new IllegalArgumentException("Path to icons is not defined!");
-        }
-
-        try (Stream<Path> stream = findIcons(path, filter)) {
-            return stream.filter(Objects::nonNull)
-                    .filter(icon -> icon.getFileName() != null)
-                    .filter(FontAwesomeIcons::isSvgImage)
-                    .filter(icon -> icon.getParent() != null)
-                    .filter(icon -> icon.getParent().getFileName() != null)
-                    .sorted()
-                    .map(FontAwesomeIcons::createFileName)
-                    .collect(Collectors.toMap(icon -> icon, FontAwesomeIcons::getIconClassName));
-        }
+        throw new IllegalStateException("Unable to find icons: Resource unavailable.");
     }
 
     private static String createFileName(final Path icon) {
@@ -123,15 +124,6 @@ public final class FontAwesomeIcons {
 
     private static boolean isSvgImage(final Path path) {
         return StringUtils.endsWith(path.getFileName().toString(), SVG_FILE_ENDING);
-    }
-
-    private static Stream<Path> findIcons(final Path path, @CheckForNull final FontAwesomeStyle filter)
-            throws IOException {
-        if (filter == null) {
-            return Files.walk(path, 2);
-        }
-
-        return Files.walk(path.resolve(filter.name().toLowerCase(Locale.ENGLISH)), 1);
     }
 
     private FontAwesomeIcons() {
