@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.jvnet.hudson.plugins</groupId>
     <artifactId>analysis-pom</artifactId>
-    <version>7.4.0</version>
+    <version>8.1.2</version>
     <relativePath />
   </parent>
 
@@ -159,6 +159,13 @@
             </goals>
           </execution>
         </executions>
+      </plugin>
+      <plugin>
+        <groupId>com.github.spotbugs</groupId>
+        <artifactId>spotbugs-maven-plugin</artifactId>
+        <configuration>
+          <excludeFilterFile>etc/spotbugs-exclusion-filter.xml</excludeFilterFile>
+        </configuration>
       </plugin>
       <plugin>
         <groupId>org.revapi</groupId>

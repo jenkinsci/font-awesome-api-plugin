@@ -11,17 +11,15 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Collections;
 import java.util.Enumeration;
-import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.Objects;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.apache.commons.lang3.StringUtils;
 
 import edu.umd.cs.findbugs.annotations.CheckForNull;
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 import io.jenkins.plugins.fontawesome.SvgTag.FontAwesomeStyle;
 
@@ -31,7 +29,6 @@ import io.jenkins.plugins.fontawesome.SvgTag.FontAwesomeStyle;
  * @author strangelookingnerd
  */
 public final class FontAwesomeIcons {
-    private static final Logger LOGGER = Logger.getLogger(FontAwesomeIcons.class.getName());
     private static final String SVG_FILE_ENDING = ".svg";
     private static final String IMAGES_SYMBOLS_PATH = "images/symbols/";
     private static final String FONT_AWESOME_API_PLUGIN = "font-awesome-api";
@@ -55,7 +52,7 @@ public final class FontAwesomeIcons {
      * @return a sorted map of available icons with icon name as key and the icon class name as value.
      */
     public static Map<String, String> getAvailableIcons() {
-        return getAvailableIcons(null);
+        return getIconsFromClasspath(null);
     }
 
     /**
@@ -71,7 +68,31 @@ public final class FontAwesomeIcons {
         return getIconsFromClasspath(filter);
     }
 
-    private static Map<String, String> getIconsFromClasspath(@CheckForNull final FontAwesomeStyle filter) {
+    private static Map<String, String> getIconsFromClasspath(@CheckForNull final FontAwesomeStyle styleFilter) {
+        try {
+            return createIconStream(getIconFolder(), styleFilter)
+                    .filter(Objects::nonNull)
+                    .filter(icon -> icon.getFileName() != null)
+                    .filter(FontAwesomeIcons::isSvgImage)
+                    .filter(icon -> icon.getParent() != null)
+                    .filter(icon -> icon.getParent().getFileName() != null)
+                    .sorted()
+                    .map(FontAwesomeIcons::createFileName)
+                    .collect(Collectors.toMap(icon -> icon, FontAwesomeIcons::getIconClassName));
+        }
+        catch (IOException exception) {
+            throw new IllegalStateException("Unable to find icons: Resource unavailable.", exception);
+        }
+    }
+
+    private static Stream<Path> createIconStream(final Path iconFolder, @CheckForNull final FontAwesomeStyle filter) throws IOException {
+        if (filter == null) {
+            return Files.walk(iconFolder, 2);
+        }
+        return Files.walk(iconFolder.resolve(filter.name().toLowerCase(Locale.ENGLISH)), 1);
+    }
+
+    private static Path getIconFolder() {
         try {
             Enumeration<URL> urls = FontAwesomeIcons.class.getClassLoader().getResources(IMAGES_SYMBOLS_PATH);
 
@@ -83,52 +104,26 @@ public final class FontAwesomeIcons {
 
                     if (StringUtils.equals(uri.getScheme(), "jar")) {
                         try (FileSystem fileSystem = FileSystems.newFileSystem(uri, Collections.emptyMap())) {
-                            return collectIcons(fileSystem.getPath(IMAGES_SYMBOLS_PATH), filter);
+                            return fileSystem.getPath(IMAGES_SYMBOLS_PATH);
                         }
                     }
-                    else {
-                        return collectIcons(Paths.get(uri), filter);
-                    }
+                    return Paths.get(uri);
                 }
             }
         }
-        catch (IOException | URISyntaxException ex) {
-            LOGGER.log(Level.WARNING, "Unable to read available icons: Resource unavailable.", ex);
+        catch (IOException | URISyntaxException exception) {
+            throw new IllegalStateException("Unable to read available icons: Resource unavailable.", exception);
         }
-
-        return new LinkedHashMap<>();
+        throw new IllegalStateException("Unable to find icons: Resource unavailable.");
     }
 
-    @SuppressFBWarnings("NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE")
-    private static Map<String, String> collectIcons(
-            @CheckForNull final Path path, @CheckForNull final FontAwesomeStyle filter) throws IOException {
-        Map<String, String> icons = new LinkedHashMap<>();
-
-        if (path != null) {
-            try (Stream<Path> stream = findIcons(path, filter)) {
-                stream.filter(icon -> icon != null && icon.getFileName() != null && StringUtils.endsWith(
-                                icon.getFileName().toString(), SVG_FILE_ENDING))
-                        .sorted().forEach(icon -> {
-                                    if (icon.getParent() != null && icon.getParent().getFileName() != null
-                                            && icon.getFileName() != null) {
-                                        String iconName = icon.getParent().getFileName() + "/" + StringUtils.removeEnd(
-                                                icon.getFileName().toString(), SVG_FILE_ENDING);
-                                        icons.put(iconName, getIconClassName(iconName));
-                                    }
-                                }
-                        );
-            }
-        }
-
-        return icons;
+    private static String createFileName(final Path icon) {
+        return icon.getParent().getFileName() + "/"
+                + StringUtils.removeEnd(icon.getFileName().toString(), SVG_FILE_ENDING);
     }
 
-    private static Stream<Path> findIcons(final Path path, @CheckForNull final FontAwesomeStyle filter) throws IOException {
-        if (filter == null) {
-            return Files.walk(path, 2);
-        }
-
-        return Files.walk(path.resolve(filter.name().toLowerCase(Locale.ENGLISH)), 1);
+    private static boolean isSvgImage(final Path path) {
+        return StringUtils.endsWith(path.getFileName().toString(), SVG_FILE_ENDING);
     }
 
     private FontAwesomeIcons() {
