@@ -68,31 +68,7 @@ public final class FontAwesomeIcons {
         return getIconsFromClasspath(filter);
     }
 
-    private static Map<String, String> getIconsFromClasspath(@CheckForNull final FontAwesomeStyle styleFilter) {
-        try {
-            return createIconStream(getIconFolder(), styleFilter)
-                    .filter(Objects::nonNull)
-                    .filter(icon -> icon.getFileName() != null)
-                    .filter(FontAwesomeIcons::isSvgImage)
-                    .filter(icon -> icon.getParent() != null)
-                    .filter(icon -> icon.getParent().getFileName() != null)
-                    .sorted()
-                    .map(FontAwesomeIcons::createFileName)
-                    .collect(Collectors.toMap(icon -> icon, FontAwesomeIcons::getIconClassName));
-        }
-        catch (IOException exception) {
-            throw new IllegalStateException("Unable to find icons: Resource unavailable.", exception);
-        }
-    }
-
-    private static Stream<Path> createIconStream(final Path iconFolder, @CheckForNull final FontAwesomeStyle filter) throws IOException {
-        if (filter == null) {
-            return Files.walk(iconFolder, 2);
-        }
-        return Files.walk(iconFolder.resolve(filter.name().toLowerCase(Locale.ENGLISH)), 1);
-    }
-
-    private static Path getIconFolder() {
+    private static Map<String, String> getIconsFromClasspath(@CheckForNull final FontAwesomeStyle filter) {
         try {
             Enumeration<URL> urls = FontAwesomeIcons.class.getClassLoader().getResources(IMAGES_SYMBOLS_PATH);
 
@@ -104,10 +80,10 @@ public final class FontAwesomeIcons {
 
                     if (StringUtils.equals(uri.getScheme(), "jar")) {
                         try (FileSystem fileSystem = FileSystems.newFileSystem(uri, Collections.emptyMap())) {
-                            return fileSystem.getPath(IMAGES_SYMBOLS_PATH);
+                            return filterIcons(fileSystem.getPath(IMAGES_SYMBOLS_PATH), filter);
                         }
                     }
-                    return Paths.get(uri);
+                    return filterIcons(Paths.get(uri), filter);
                 }
             }
         }
@@ -115,6 +91,25 @@ public final class FontAwesomeIcons {
             throw new IllegalStateException("Unable to read available icons: Resource unavailable.", exception);
         }
         throw new IllegalStateException("Unable to find icons: Resource unavailable.");
+    }
+
+    private static Map<String, String> filterIcons(final Path iconFolder, @CheckForNull final FontAwesomeStyle filter) throws IOException {
+        return createIconStream(iconFolder, filter)
+                .filter(Objects::nonNull)
+                .filter(icon -> icon.getFileName() != null)
+                .filter(FontAwesomeIcons::isSvgImage)
+                .filter(icon -> icon.getParent() != null)
+                .filter(icon -> icon.getParent().getFileName() != null)
+                .sorted()
+                .map(FontAwesomeIcons::createFileName)
+                .collect(Collectors.toMap(icon -> icon, FontAwesomeIcons::getIconClassName));
+    }
+
+    private static Stream<Path> createIconStream(final Path iconFolder, @CheckForNull final FontAwesomeStyle filter) throws IOException {
+        if (filter == null) {
+            return Files.walk(iconFolder, 2);
+        }
+        return Files.walk(iconFolder.resolve(filter.name().toLowerCase(Locale.ENGLISH)), 1);
     }
 
     private static String createFileName(final Path icon) {
