@@ -101,13 +101,25 @@ jobs:
                   ]
                 },
                 {
+                  "name": "API Problems",
+                  "id": "api",
+                  "icon": "no_entry_sign",
+                  "tools": [
+                    {
+                      "id": "revapi",
+                      "sourcePath": "src/main/java",
+                      "pattern": "**/target/revapi-result.json"
+                    }
+                  ]
+                },
+                {
                   "name": "Vulnerabilities",
                   "id": "vulnerabilities",
                   "icon": "shield",
                   "tools": [
                     {
                       "id": "owasp-dependency-check",
-                      "pattern": "**/target/dependency-check-report.json"                    
+                      "pattern": "**/target/dependency-check-report.json"
                     }
                   ]
                 }
@@ -131,7 +143,7 @@ jobs:
                   ]
                 }
               ],
-              "metrics": 
+              "metrics":
                 {
                   "name": "Software Metrics",
                   "tools": [
