@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.jvnet.hudson.plugins</groupId>
     <artifactId>analysis-pom</artifactId>
-    <version>10.2792.v9dd09fb_3c255</version>
+    <version>11.2805.vdb_e83282030b_</version>
     <relativePath />
   </parent>
 
@@ -45,12 +45,10 @@
     <dependency>
       <groupId>io.jenkins.plugins</groupId>
       <artifactId>plugin-util-api</artifactId>
-      <version>6.1167.v022176c7e0ca_</version>
     </dependency>
     <dependency>
       <groupId>io.jenkins.plugins</groupId>
       <artifactId>plugin-util-api</artifactId>
-      <version>6.1167.v022176c7e0ca_</version>
       <classifier>tests</classifier>
       <scope>test</scope>
     </dependency>
