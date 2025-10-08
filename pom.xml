@@ -18,7 +18,7 @@
   <url>https://github.com/jenkinsci/font-awesome-api-plugin</url>
 
   <properties>
-    <revision>7.0.1</revision>
+    <revision>7.1.0</revision>
     <changelist>999999-SNAPSHOT</changelist>
 
     <module.name>${project.groupId}.font-awesome-api</module.name>
