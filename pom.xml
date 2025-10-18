@@ -22,7 +22,7 @@
     <changelist>999999-SNAPSHOT</changelist>
 
     <module.name>${project.groupId}.font-awesome-api</module.name>
-    <testcontainers.version>1.21.3</testcontainers.version>
+    <testcontainers.version>2.0.1</testcontainers.version>
 
   </properties>
 
@@ -98,12 +98,6 @@
         <artifactId>maven-clean-plugin</artifactId>
         <configuration>
           <filesets>
-            <fileset>
-              <directory>./</directory>
-              <includes>
-                <include>package-lock.json</include>
-              </includes>
-            </fileset>
             <fileset>
               <directory>node</directory>
               <includes>
