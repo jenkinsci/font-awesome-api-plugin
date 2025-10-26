@@ -1,5 +1,9 @@
 package io.jenkins.plugins.fontawesome;
 
+import org.apache.commons.lang3.Strings;
+
+import edu.umd.cs.findbugs.annotations.CheckForNull;
+
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -16,10 +20,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
-import org.apache.commons.lang3.StringUtils;
-
-import edu.umd.cs.findbugs.annotations.CheckForNull;
 
 import io.jenkins.plugins.fontawesome.SvgTag.FontAwesomeStyle;
 
@@ -75,10 +75,10 @@ public final class FontAwesomeIcons {
             while (urls.hasMoreElements()) {
                 URL url = urls.nextElement();
 
-                if (StringUtils.contains(url.toExternalForm(), FONT_AWESOME_API_PLUGIN)) {
+                if (Strings.CS.contains(url.toExternalForm(), FONT_AWESOME_API_PLUGIN)) {
                     URI uri = url.toURI();
 
-                    if (StringUtils.equals(uri.getScheme(), "jar")) {
+                    if (Strings.CS.contains(uri.getScheme(), "jar")) {
                         try (FileSystem fileSystem = FileSystems.newFileSystem(uri, Collections.emptyMap())) {
                             return filterIcons(fileSystem.getPath(IMAGES_SYMBOLS_PATH), filter);
                         }
@@ -114,11 +114,11 @@ public final class FontAwesomeIcons {
 
     private static String createFileName(final Path icon) {
         return icon.getParent().getFileName() + "/"
-                + StringUtils.removeEnd(icon.getFileName().toString(), SVG_FILE_ENDING);
+                + Strings.CS.removeEnd(icon.getFileName().toString(), SVG_FILE_ENDING);
     }
 
     private static boolean isSvgImage(final Path path) {
-        return StringUtils.endsWith(path.getFileName().toString(), SVG_FILE_ENDING);
+        return Strings.CS.endsWith(path.getFileName().toString(), SVG_FILE_ENDING);
     }
 
     private FontAwesomeIcons() {

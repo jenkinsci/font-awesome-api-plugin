@@ -1,5 +1,14 @@
 package io.jenkins.plugins.fontawesome;
 
+import org.apache.commons.lang3.Strings;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EnumSource;
+import org.junit.jupiter.params.provider.NullSource;
+
+import edu.umd.cs.findbugs.annotations.CheckForNull;
+
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -9,15 +18,6 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
-import org.apache.commons.lang3.StringUtils;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.EnumSource;
-import org.junit.jupiter.params.provider.NullSource;
-
-import edu.umd.cs.findbugs.annotations.CheckForNull;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -51,8 +51,8 @@ class FontAwesomeIconsTest {
         try (Stream<Path> stream = Files
                 .walk(Paths.get("./target/classes/images/symbols/" + (style == null ? "" : style.name().toLowerCase(Locale.ENGLISH))), 2)) {
             Set<String> iconNames = stream
-                    .filter(path -> StringUtils.endsWith(path.getFileName().toString(), ".svg"))
-                    .map(path -> path.getParent().getFileName().toString() + "/" + StringUtils.removeEnd(path.getFileName().toString(), ".svg"))
+                    .filter(path -> Strings.CS.endsWith(path.getFileName().toString(), ".svg"))
+                    .map(path -> path.getParent().getFileName().toString() + "/" + Strings.CS.removeEnd(path.getFileName().toString(), ".svg"))
                     .collect(Collectors.toSet());
 
             assertThat(availableIcons.keySet()).isEqualTo(iconNames);
