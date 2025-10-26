@@ -4,11 +4,6 @@
     "tools": [
       {
         "id": "junit",
-        "name": "Unit Tests",
-        "pattern": "**/target/surefire-reports/TEST*data*.xml"
-      },
-      {
-        "id": "junit",
         "icon": "rocket",
         "name": "Integration Tests",
         "pattern": "**/target/failsafe-reports/TEST*.xml"
