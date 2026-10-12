@@ -1,10 +1,9 @@
 package io.jenkins.plugins.fontawesome;
 
-import org.junit.jupiter.api.Test;
+import static org.assertj.core.api.Assertions.*;
 
 import io.jenkins.plugins.util.IntegrationTestWithJenkinsPerSuite;
-
-import static org.assertj.core.api.Assertions.*;
+import org.junit.jupiter.api.Test;
 
 class SvgTagITest extends IntegrationTestWithJenkinsPerSuite {
     @Test
@@ -20,7 +19,12 @@ class SvgTagITest extends IntegrationTestWithJenkinsPerSuite {
         assertThat(tag.toString()).contains("classes=one two icon-md");
 
         tag.withClasses("one two");
-        assertThat(tag.render()).contains("class=\"one two icon-md\"", "xmlns=\"http://www.w3.org/2000/svg\"",
-                "https://fontawesome.com ", "<svg ", "</svg>");
+        assertThat(tag.render())
+                .contains(
+                        "class=\"one two icon-md\"",
+                        "xmlns=\"http://www.w3.org/2000/svg\"",
+                        "https://fontawesome.com ",
+                        "<svg ",
+                        "</svg>");
     }
 }
