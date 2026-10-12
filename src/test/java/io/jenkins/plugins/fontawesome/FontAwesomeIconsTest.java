@@ -1,14 +1,8 @@
 package io.jenkins.plugins.fontawesome;
 
-import org.apache.commons.lang3.Strings;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.EnumSource;
-import org.junit.jupiter.params.provider.NullSource;
+import static org.assertj.core.api.Assertions.*;
 
 import edu.umd.cs.findbugs.annotations.CheckForNull;
-
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -18,8 +12,12 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
-import static org.assertj.core.api.Assertions.*;
+import org.apache.commons.lang3.Strings;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EnumSource;
+import org.junit.jupiter.params.provider.NullSource;
 
 /**
  * Test Class for {@link FontAwesomeIcons}.
@@ -29,8 +27,7 @@ import static org.assertj.core.api.Assertions.*;
 class FontAwesomeIconsTest {
     @BeforeAll
     static void init() {
-        assertThat(
-                Files.exists(Paths.get("./target/classes/images/symbols/")))
+        assertThat(Files.exists(Paths.get("./target/classes/images/symbols/")))
                 .as("No Font Awesome Symbols found! Try running 'mvn process-resources' first!")
                 .isTrue();
     }
@@ -44,15 +41,19 @@ class FontAwesomeIconsTest {
     @NullSource
     @EnumSource(SvgTag.FontAwesomeStyle.class)
     void testGetAvailableIconsFiltered(@CheckForNull final SvgTag.FontAwesomeStyle style) throws Exception {
-        Map<String, String> availableIcons = style == null ? FontAwesomeIcons.getAvailableIcons() : FontAwesomeIcons.getAvailableIcons(style);
+        Map<String, String> availableIcons =
+                style == null ? FontAwesomeIcons.getAvailableIcons() : FontAwesomeIcons.getAvailableIcons(style);
 
         assertThat(availableIcons).isNotNull().isNotEmpty();
 
-        try (Stream<Path> stream = Files
-                .walk(Paths.get("./target/classes/images/symbols/" + (style == null ? "" : style.name().toLowerCase(Locale.ENGLISH))), 2)) {
-            Set<String> iconNames = stream
-                    .filter(path -> Strings.CS.endsWith(path.getFileName().toString(), ".svg"))
-                    .map(path -> path.getParent().getFileName().toString() + "/" + Strings.CS.removeEnd(path.getFileName().toString(), ".svg"))
+        try (Stream<Path> stream = Files.walk(
+                Paths.get("./target/classes/images/symbols/"
+                        + (style == null ? "" : style.name().toLowerCase(Locale.ENGLISH))),
+                2)) {
+            Set<String> iconNames = stream.filter(
+                            path -> Strings.CS.endsWith(path.getFileName().toString(), ".svg"))
+                    .map(path -> path.getParent().getFileName().toString() + "/"
+                            + Strings.CS.removeEnd(path.getFileName().toString(), ".svg"))
                     .collect(Collectors.toSet());
 
             assertThat(availableIcons.keySet()).isEqualTo(iconNames);

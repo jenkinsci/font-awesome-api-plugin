@@ -1,14 +1,12 @@
 package io.jenkins.plugins.fontawesome;
 
+import j2html.tags.UnescapedText;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
-
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.jenkins.ui.symbol.Symbol;
 import org.jenkins.ui.symbol.SymbolRequest.Builder;
-
-import j2html.tags.UnescapedText;
 
 /**
  * Textual SVG tag representation that shows a FontAwesome icon.

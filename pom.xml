@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
@@ -7,24 +8,15 @@
     <version>12.3362.vd97f455460a_2</version>
     <relativePath />
   </parent>
+  <groupId>io.jenkins.plugins</groupId>
 
   <artifactId>font-awesome-api</artifactId>
-  <groupId>io.jenkins.plugins</groupId>
+  <version>${revision}-${changelist}</version>
   <packaging>hpi</packaging>
   <name>Font Awesome API Plugin</name>
-  <version>${revision}-${changelist}</version>
 
   <description>Provides the free fonts of Font Awesome for Jenkins plugins.</description>
   <url>https://github.com/jenkinsci/font-awesome-api-plugin</url>
-
-  <properties>
-    <revision>7.3.1</revision>
-    <changelist>999999-SNAPSHOT</changelist>
-
-    <module.name>${project.groupId}.font-awesome-api</module.name>
-    <testcontainers.version>2.0.5</testcontainers.version>
-
-  </properties>
 
   <licenses>
     <license>
@@ -35,11 +27,27 @@
 
   <developers>
     <developer>
-      <name>Ullrich Hafner</name>
       <id>uhafner</id>
+      <name>Ullrich Hafner</name>
       <email>ullrich.hafner@gmail.com</email>
     </developer>
   </developers>
+
+  <scm>
+    <connection>scm:git:https://github.com/jenkinsci/font-awesome-api-plugin.git</connection>
+    <developerConnection>scm:git:git@github.com:jenkinsci/font-awesome-api-plugin.git</developerConnection>
+    <tag>${scmTag}</tag>
+    <url>https://github.com/jenkinsci/font-awesome-api-plugin</url>
+  </scm>
+
+  <properties>
+    <revision>7.3.1</revision>
+    <changelist>999999-SNAPSHOT</changelist>
+
+    <module.name>${project.groupId}.font-awesome-api</module.name>
+    <testcontainers.version>2.0.5</testcontainers.version>
+
+  </properties>
 
   <dependencies>
     <dependency>
@@ -63,6 +71,21 @@
       <scope>test</scope>
     </dependency>
     <dependency>
+      <groupId>org.jenkins-ci.plugins.workflow</groupId>
+      <artifactId>workflow-cps</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.jenkins-ci.plugins.workflow</groupId>
+      <artifactId>workflow-job</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.jenkins-ci.plugins.workflow</groupId>
+      <artifactId>workflow-step-api</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
       <groupId>org.testcontainers</groupId>
       <artifactId>testcontainers</artifactId>
       <version>${testcontainers.version}</version>
@@ -74,25 +97,31 @@
         </exclusion>
       </exclusions>
     </dependency>
-    <dependency>
-      <groupId>org.jenkins-ci.plugins.workflow</groupId>
-      <artifactId>workflow-cps</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.jenkins-ci.plugins.workflow</groupId>
-      <artifactId>workflow-step-api</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.jenkins-ci.plugins.workflow</groupId>
-      <artifactId>workflow-job</artifactId>
-      <scope>test</scope>
-    </dependency>
   </dependencies>
+
+  <repositories>
+    <repository>
+      <id>repo.jenkins-ci.org</id>
+      <url>https://repo.jenkins-ci.org/public/</url>
+    </repository>
+  </repositories>
+
+  <pluginRepositories>
+    <pluginRepository>
+      <id>repo.jenkins-ci.org</id>
+      <url>https://repo.jenkins-ci.org/public/</url>
+    </pluginRepository>
+  </pluginRepositories>
 
   <build>
     <plugins>
+      <plugin>
+        <groupId>org.revapi</groupId>
+        <artifactId>revapi-maven-plugin</artifactId>
+        <configuration>
+          <skip>true</skip>
+        </configuration>
+      </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-clean-plugin</artifactId>
@@ -119,10 +148,10 @@
         <executions>
           <execution>
             <id>copy-icons</id>
-            <phase>process-resources</phase>
             <goals>
               <goal>copy-resources</goal>
             </goals>
+            <phase>process-resources</phase>
             <configuration>
               <outputDirectory>${project.build.directory}/classes/images/symbols</outputDirectory>
               <resources>
@@ -140,17 +169,17 @@
         <version>3.2.0</version>
         <executions>
           <execution>
+            <goals>
+              <goal>run</goal>
+            </goals>
             <phase>process-resources</phase>
             <configuration>
               <target>
-                <replace token="path d=" value="path fill=&quot;currentColor&quot; d=" dir="${project.build.directory}/classes/images/symbols">
+                <replace dir="${project.build.directory}/classes/images/symbols" token="path d=" value="path fill=&quot;currentColor&quot; d=">
                   <include name="**/*.svg" />
                 </replace>
               </target>
             </configuration>
-            <goals>
-              <goal>run</goal>
-            </goals>
           </execution>
         </executions>
       </plugin>
@@ -164,26 +193,4 @@
     </plugins>
   </build>
 
-  <scm>
-    <connection>scm:git:https://github.com/jenkinsci/font-awesome-api-plugin.git</connection>
-    <developerConnection>scm:git:git@github.com:jenkinsci/font-awesome-api-plugin.git</developerConnection>
-    <url>https://github.com/jenkinsci/font-awesome-api-plugin</url>
-    <tag>${scmTag}</tag>
-  </scm>
-
-  <repositories>
-    <repository>
-      <id>repo.jenkins-ci.org</id>
-      <url>https://repo.jenkins-ci.org/public/</url>
-    </repository>
-  </repositories>
-
-  <pluginRepositories>
-    <pluginRepository>
-      <id>repo.jenkins-ci.org</id>
-      <url>https://repo.jenkins-ci.org/public/</url>
-    </pluginRepository>
-  </pluginRepositories>
-
 </project>
-

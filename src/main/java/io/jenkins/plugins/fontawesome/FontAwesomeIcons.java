@@ -1,9 +1,7 @@
 package io.jenkins.plugins.fontawesome;
 
-import org.apache.commons.lang3.Strings;
-
 import edu.umd.cs.findbugs.annotations.CheckForNull;
-
+import io.jenkins.plugins.fontawesome.SvgTag.FontAwesomeStyle;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -20,8 +18,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
-import io.jenkins.plugins.fontawesome.SvgTag.FontAwesomeStyle;
+import org.apache.commons.lang3.Strings;
 
 /**
  * Utility to work with icons provided by the font-awesome-api-plugin.
@@ -86,14 +83,14 @@ public final class FontAwesomeIcons {
                     return filterIcons(Paths.get(uri), filter);
                 }
             }
-        }
-        catch (IOException | URISyntaxException exception) {
+        } catch (IOException | URISyntaxException exception) {
             throw new IllegalStateException("Unable to read available icons: Resource unavailable.", exception);
         }
         throw new IllegalStateException("Unable to find icons: Resource unavailable.");
     }
 
-    private static Map<String, String> filterIcons(final Path iconFolder, @CheckForNull final FontAwesomeStyle filter) throws IOException {
+    private static Map<String, String> filterIcons(final Path iconFolder, @CheckForNull final FontAwesomeStyle filter)
+            throws IOException {
         return createIconStream(iconFolder, filter)
                 .filter(Objects::nonNull)
                 .filter(icon -> icon.getFileName() != null)
@@ -105,7 +102,8 @@ public final class FontAwesomeIcons {
                 .collect(Collectors.toMap(icon -> icon, FontAwesomeIcons::getIconClassName));
     }
 
-    private static Stream<Path> createIconStream(final Path iconFolder, @CheckForNull final FontAwesomeStyle filter) throws IOException {
+    private static Stream<Path> createIconStream(final Path iconFolder, @CheckForNull final FontAwesomeStyle filter)
+            throws IOException {
         if (filter == null) {
             return Files.walk(iconFolder, 2);
         }
